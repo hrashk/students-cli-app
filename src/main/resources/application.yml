@@ -1,0 +1,8 @@
+logging:
+  pattern:
+    console:
+  file:
+    name: shell.log
+spring:
+  main:
+    banner-mode: off
