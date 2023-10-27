@@ -2,9 +2,12 @@ package io.github.hrashk.students.cli.app;
 
 import org.springframework.shell.command.annotation.Command;
 
+import java.util.stream.Collectors;
+
 @Command(group = "Students App")
 public class StudentsCommands {
 
+    public static final String NO_STUDENTS = "There are no students in the system";
     private final StudentsList studentsList;
 
     public StudentsCommands(StudentsList studentsList) {
@@ -13,7 +16,12 @@ public class StudentsCommands {
 
     @Command(description = "list all students in the system")
     public String show() {
-        return String.format("Showing %d students.", studentsList.size());
+        if (studentsList.isEmpty())
+            return NO_STUDENTS;
+        else
+            return studentsList.getAll().stream()
+                    .map(Student::toString)
+                    .collect(Collectors.joining("\n"));
     }
 
     @Command(description = "list all students in the system")

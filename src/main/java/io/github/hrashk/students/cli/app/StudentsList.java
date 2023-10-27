@@ -9,13 +9,21 @@ import java.util.List;
 
 @Component
 public class StudentsList {
-    private final List<String> students = new ArrayList<>();
+    private final List<Student> students = new ArrayList<>();
 
-    public Collection<String> getAll() {
+    public Collection<Student> getAll() {
         return Collections.unmodifiableList(students);
     }
 
     public int size() {
         return students.size();
+    }
+
+    public boolean isEmpty() {
+        return students.isEmpty();
+    }
+
+    public void add(Student student) {
+        students.add(student);
     }
 }
