@@ -42,7 +42,7 @@ class StudentsApplicationTests {
 
         await().atMost(Duration.ofSeconds(2)).untilAsserted(() -> {
             ShellScreenAssert assertion = ShellAssertions.assertThat(session.screen());
-            Stream.of("Students App", "show:")
+            Stream.of("Students App", "show:", "add:", "remove:", "erase:")
                     .forEach(assertion::containsText);
         });
     }
