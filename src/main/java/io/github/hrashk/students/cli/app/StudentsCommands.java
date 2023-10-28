@@ -25,8 +25,8 @@ public class StudentsCommands {
     }
 
     @Command(description = "list all students in the system")
-    public String add(String firstName, String lastName, int age) {
-        return String.format("Student %s added.", firstName);
+    public void add(String firstName, String lastName, int age) {
+        studentsList.add(firstName, lastName, age);
     }
 
     @Command(description = "remove a student by id")

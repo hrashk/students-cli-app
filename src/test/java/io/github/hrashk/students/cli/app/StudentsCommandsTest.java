@@ -15,17 +15,20 @@ class StudentsCommandsTest {
 
     @Test
     void showSome() {
-        StudentsList students = new StudentsList();
-        students.add(new Student(1, "Ivan", "Ivanov", 23));
-        students.add(new Student(2, "Maria", "Ivanovna", 31));
-        students.add(new Student(3, "Daria", "Petrovna", 29));
-        students.add(new Student(4, "Peter", "Petroff", 27));
+        StudentsList students = TestData.sampleStudentsList();
         var commands = new StudentsCommands(students);
         assertThat(commands.show().split("\\n")).hasSize(4);
     }
 
     @Test
     void add() {
+        StudentsList students = TestData.sampleStudentsList();
+        int originalSize = students.size();
+        var commands = new StudentsCommands(students);
+
+        commands.add("Joanne", "Doe", 13);
+
+        assertThat(students.size()).isEqualTo(originalSize + 1);
     }
 
     @Test

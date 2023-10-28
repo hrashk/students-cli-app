@@ -23,7 +23,8 @@ public class StudentsList {
         return students.isEmpty();
     }
 
-    public void add(Student student) {
-        students.add(student);
+    public void add(String firstName, String lastName, int age) {
+        int id = students.size() + 1;
+        students.add(new Student(id, firstName, lastName, age));
     }
 }
