@@ -38,8 +38,12 @@ public class StudentsCommands {
     }
 
     @Command(description = "list all students in the system")
-    public void add(String firstName, String lastName, int age) {
+    public String add(String firstName, String lastName, int age) {
+        if (age <= 0)
+            return NEGATIVE_AGE;
+
         studentsList.add(firstName, lastName, age);
+        return "";
     }
 
     @Command(description = "remove a student by id")
