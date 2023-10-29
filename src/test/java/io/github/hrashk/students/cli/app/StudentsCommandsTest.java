@@ -23,6 +23,11 @@ class StudentsCommandsTest {
         commands.add("Joanne", "Doe", 13);
 
         assertThat(students.size()).isEqualTo(originalSize + 1);
+        assertStudentIdsAreUnique(students);
+    }
+
+    private static void assertStudentIdsAreUnique(StudentsList students) {
+        assertThat(students.getAll().stream().map(Student::id).toList()).doesNotHaveDuplicates();
     }
 
     @Test
@@ -33,12 +38,35 @@ class StudentsCommandsTest {
 
         String output = commands.add("Joanne", "Doe", -13);
 
-        assertThat(students.size()).isEqualTo(originalSize);
         assertEquals(StudentsCommands.NEGATIVE_AGE, output);
+        assertThat(students.size()).isEqualTo(originalSize);
     }
 
     @Test
-    void remove() {
+    void addingStudentAfterRemovalGetsUniqueId() {
+        StudentsList students = TestData.sampleStudentsList();
+        int originalSize = students.size();
+        var commands = new StudentsCommands(students);
+
+        commands.remove(2);
+
+        assertThat(students.size()).isEqualTo(originalSize - 1);
+        assertStudentIdsAreUnique(students);
+
+        commands.add("Joanne", "Doe", 13);
+        assertStudentIdsAreUnique(students);
+    }
+
+    @Test
+    void removingInvalidIdFails() {
+        StudentsList students = TestData.sampleStudentsList();
+        int originalSize = students.size();
+        var commands = new StudentsCommands(students);
+
+        String output = commands.remove(33);
+
+        assertEquals(StudentsCommands.NOT_FOUND, output);
+        assertThat(students.size()).isEqualTo(originalSize);
     }
 
     @Test

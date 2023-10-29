@@ -13,6 +13,7 @@ public class StudentsCommands {
 
     public static final String NO_STUDENTS = "there are no students in the system";
     public static final String NEGATIVE_AGE = "Age must be positive";
+    public static final String NOT_FOUND = "Student not found";
     private final StudentsList studentsList;
 
     public StudentsCommands(StudentsList studentsList) {
@@ -48,8 +49,12 @@ public class StudentsCommands {
 
     @Command(description = "remove a student by id")
     @CommandAvailability(provider = "studentsAvailability")
-    public String remove(int id) {
-        return String.format("Student with id %d is removed.", id);
+    public String remove(int studentId) {
+        if (studentsList.contains(studentId)) {
+            studentsList.removeById(studentId);
+            return "";
+        } else
+            return NOT_FOUND;
     }
 
     @Command(description = "delete all students from the system")

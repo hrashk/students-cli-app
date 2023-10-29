@@ -24,7 +24,22 @@ public class StudentsList {
     }
 
     public void add(String firstName, String lastName, int age) {
-        int id = students.size() + 1;
+        int id = lastStudentId() + 1;
         students.add(new Student(id, firstName, lastName, age));
+    }
+
+    private int lastStudentId() {
+        if (students.isEmpty())
+            return 0;
+        else
+            return students.get(students.size() - 1).id();
+    }
+
+    public boolean contains(int studentId) {
+        return students.stream().anyMatch(s -> s.id() == studentId);
+    }
+
+    public void removeById(int studentId) {
+        students.removeIf(s -> s.id() == studentId);
     }
 }
