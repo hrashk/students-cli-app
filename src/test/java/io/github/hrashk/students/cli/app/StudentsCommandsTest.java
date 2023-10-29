@@ -31,18 +31,6 @@ class StudentsCommandsTest {
     }
 
     @Test
-    void addingStudentWithNegativeAgeFails() {
-        StudentsList students = TestData.sampleStudentsList();
-        int originalSize = students.size();
-        var commands = new StudentsCommands(students);
-
-        String output = commands.add("Joanne", "Doe", -13);
-
-        assertEquals(StudentsCommands.NEGATIVE_AGE, output);
-        assertThat(students.size()).isEqualTo(originalSize);
-    }
-
-    @Test
     void addingStudentAfterRemovalGetsUniqueId() {
         StudentsList students = TestData.sampleStudentsList();
         int originalSize = students.size();

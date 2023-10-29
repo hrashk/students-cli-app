@@ -1,5 +1,6 @@
 package io.github.hrashk.students.cli.app;
 
+import jakarta.validation.constraints.Min;
 import org.springframework.context.annotation.Bean;
 import org.springframework.shell.Availability;
 import org.springframework.shell.AvailabilityProvider;
@@ -12,7 +13,6 @@ import java.util.stream.Collectors;
 public class StudentsCommands {
 
     public static final String NO_STUDENTS = "there are no students in the system";
-    public static final String NEGATIVE_AGE = "Age must be positive";
     public static final String NOT_FOUND = "Student not found";
     private final StudentsList studentsList;
 
@@ -43,12 +43,9 @@ public class StudentsCommands {
     }
 
     @Command(description = "list all students in the system")
-    public String add(String firstName, String lastName, int age) {
-        if (age <= 0)
-            return NEGATIVE_AGE;
-
+    public void add(String firstName, String lastName,
+                    @Min(value = 1, message = "Age must be positive") int age) {
         studentsList.add(firstName, lastName, age);
-        return "";
     }
 
     @Command(description = "remove a student by id")
