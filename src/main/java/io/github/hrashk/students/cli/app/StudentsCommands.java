@@ -23,7 +23,11 @@ public class StudentsCommands {
     @Command(description = "list all students in the system")
     @CommandAvailability(provider = "studentsAvailability")
     public String show() {
-        return studentsList.getAll().stream()
+        String header = """
+                 id | first name | last name | age
+                ----------------------------------
+                """;
+        return header + studentsList.getAll().stream()
                 .map(Student::toString)
                 .collect(Collectors.joining("\n"));
     }

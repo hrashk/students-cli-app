@@ -11,7 +11,7 @@ class StudentsCommandsTest {
     void showNonEmptyList() {
         StudentsList students = TestData.sampleStudentsList();
         var commands = new StudentsCommands(students);
-        assertThat(commands.show().split("\\n")).hasSize(4);
+        assertThat(commands.show().split("\\n")).hasSize(6);
     }
 
     @Test
