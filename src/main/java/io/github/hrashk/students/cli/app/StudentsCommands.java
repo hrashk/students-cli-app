@@ -50,12 +50,11 @@ public class StudentsCommands {
 
     @Command(description = "remove a student by id")
     @CommandAvailability(provider = "studentsAvailability")
-    public String remove(int studentId) {
+    public void remove(int studentId) {
         if (studentsList.contains(studentId)) {
             studentsList.removeById(studentId);
-            return "";
         } else
-            return NOT_FOUND;
+            throw new IllegalArgumentException(NOT_FOUND);
     }
 
     @Command(description = "delete all students from the system")

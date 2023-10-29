@@ -3,7 +3,7 @@ package io.github.hrashk.students.cli.app;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class StudentsCommandsTest {
 
@@ -51,9 +51,9 @@ class StudentsCommandsTest {
         int originalSize = students.size();
         var commands = new StudentsCommands(students);
 
-        String output = commands.remove(33);
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> commands.remove(33));
 
-        assertEquals(StudentsCommands.NOT_FOUND, output);
         assertThat(students.size()).isEqualTo(originalSize);
     }
 
@@ -62,8 +62,9 @@ class StudentsCommandsTest {
         StudentsList students = TestData.sampleStudentsList();
         var commands = new StudentsCommands(students);
 
-        commands.erase();
+        String output = commands.erase();
 
+        assertThat(output).isNotBlank();
         assertThat(students.getAll()).isEmpty();
     }
 }
