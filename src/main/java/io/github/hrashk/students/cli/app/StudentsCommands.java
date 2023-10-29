@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @Command(group = "Students App")
 public class StudentsCommands {
 
-    public static final String NO_STUDENTS = "There are no students in the system";
+    public static final String NO_STUDENTS = "there are no students in the system";
     public static final String NEGATIVE_AGE = "Age must be positive";
     private final StudentsList studentsList;
 
@@ -20,7 +20,7 @@ public class StudentsCommands {
     }
 
     @Command(description = "list all students in the system")
-    @CommandAvailability(provider = "showAvailability")
+    @CommandAvailability(provider = "studentsAvailability")
     public String show() {
         return studentsList.getAll().stream()
                 .map(Student::toString)
@@ -28,7 +28,7 @@ public class StudentsCommands {
     }
 
     @Bean
-    public AvailabilityProvider showAvailability() {
+    public AvailabilityProvider studentsAvailability() {
         return () -> {
             if (studentsList.isEmpty())
                 return Availability.unavailable(NO_STUDENTS);
@@ -43,11 +43,13 @@ public class StudentsCommands {
     }
 
     @Command(description = "remove a student by id")
+    @CommandAvailability(provider = "studentsAvailability")
     public String remove(int id) {
         return String.format("Student with id %d is removed.", id);
     }
 
     @Command(description = "delete all students from the system")
+    @CommandAvailability(provider = "studentsAvailability")
     public String erase() {
         return "All students removed";
     }
