@@ -70,6 +70,12 @@ class StudentsCommandsTest {
     }
 
     @Test
-    void erase() {
+    void eraseNonEmptyList() {
+        StudentsList students = TestData.sampleStudentsList();
+        var commands = new StudentsCommands(students);
+
+        commands.erase();
+
+        assertThat(students.getAll()).isEmpty();
     }
 }

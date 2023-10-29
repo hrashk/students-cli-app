@@ -42,4 +42,8 @@ public class StudentsList {
     public void removeById(int studentId) {
         students.removeIf(s -> s.id() == studentId);
     }
+
+    public void clear() {
+        students.clear();
+    }
 }

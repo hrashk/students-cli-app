@@ -60,6 +60,7 @@ public class StudentsCommands {
     @Command(description = "delete all students from the system")
     @CommandAvailability(provider = "studentsAvailability")
     public String erase() {
+        studentsList.clear();
         return "All students removed";
     }
 }
