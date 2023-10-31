@@ -1,5 +1,6 @@
 package io.github.hrashk.students.cli.app;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
@@ -33,6 +34,11 @@ class StudentsGeneratorTests {
 
         StudentsList list = ctx.getBean(StudentsList.class);
         assertThat(list.size()).isGreaterThan(5);
+    }
+
+    @AfterAll
+    static void resetProperties() {
+        System.setProperty("app.students.generate", "false");
     }
 
     /** Setting system property directly instead of yaml config files to avoid interference with other tests. */
