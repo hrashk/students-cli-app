@@ -10,15 +10,15 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
-@TestPropertySource(properties = "app.students.generate=true")
+@TestPropertySource(properties = "app.students.generate=false")
 @Import({StudentsList.class, StudentsGenerator.class})
-class GeneratedStudentsTests {
+class EmptyStudentsTests {
 
     @Autowired
     private StudentsList list;
 
     @Test
-    void listIsNotEmpty() {
-        assertThat(list.size()).isGreaterThan(5);
+    void listIsEmpty() {
+        assertThat(list.size()).isEqualTo(0);
     }
 }
