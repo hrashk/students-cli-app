@@ -2,7 +2,7 @@ package io.github.hrashk.students.cli.app;
 
 import net.datafaker.Faker;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +17,12 @@ public class StudentsGenerator {
         this.studentsList = studentsList;
     }
 
-    @EventListener(ApplicationReadyEvent.class)
+    /**
+     * Strangely, the Ready event is fired only after exiting the shell when running from the command line.
+     * The Started event is fired before the shell prompt is shown, so weare relying on it here.
+     * Even more surprisingly, the integration test passes with either of the events...
+     */
+    @EventListener(ApplicationStartedEvent.class)
     public void generateRandomStudents() {
         var random = ThreadLocalRandom.current();
         Faker f = new Faker(random);
