@@ -33,8 +33,9 @@ public class StudentsList {
 
     public void add(String firstName, String lastName, int age) {
         int id = lastStudentId() + 1;
-        students.add(new Student(id, firstName, lastName, age));
-        publisher.publishEvent(new StudentAddedEvent(id));
+        Student newStudent = new Student(id, firstName, lastName, age);
+        students.add(newStudent);
+        publisher.publishEvent(new StudentAddedEvent(newStudent));
     }
 
     private int lastStudentId() {

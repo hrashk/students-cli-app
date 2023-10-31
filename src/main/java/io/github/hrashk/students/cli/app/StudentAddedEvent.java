@@ -1,13 +1,13 @@
 package io.github.hrashk.students.cli.app;
 
 public class StudentAddedEvent {
-    private final int studentId;
+    private final Student student;
 
-    public StudentAddedEvent(int studentId) {
-        this.studentId = studentId;
+    public StudentAddedEvent(Student student) {
+        this.student = student;
     }
 
-    public int studentId() {
-        return this.studentId;
+    public Student student() {
+        return this.student;
     }
 }

@@ -15,7 +15,7 @@ public class StudentsEventsListener {
 
     @EventListener
     public void studentAdded(StudentAddedEvent event) {
-        terminal.writer().printf("Student id %d was added%n", event.studentId());
+        terminal.writer().printf("Student %s %s was added%n", event.student().firstName(), event.student().lastName());
         terminal.writer().flush();
     }
 
