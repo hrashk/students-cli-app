@@ -1,23 +1,24 @@
 package io.github.hrashk.students.cli.app;
 
 import net.datafaker.Faker;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 @ConditionalOnProperty("app.students.generate")
-public class StudentsGenerator implements InitializingBean {
+public class StudentsGenerator {
     private final StudentsList studentsList;
 
     public StudentsGenerator(StudentsList studentsList) {
         this.studentsList = studentsList;
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
+    @EventListener(ApplicationReadyEvent.class)
+    public void generateRandomStudents() {
         var random = ThreadLocalRandom.current();
         Faker f = new Faker(random);
 
