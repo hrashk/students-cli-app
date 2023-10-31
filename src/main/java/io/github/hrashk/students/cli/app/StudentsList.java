@@ -1,5 +1,7 @@
 package io.github.hrashk.students.cli.app;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -10,6 +12,12 @@ import java.util.List;
 @Component
 public class StudentsList {
     private final List<Student> students = new ArrayList<>();
+    private ApplicationEventPublisher publisher;
+
+    @Autowired
+    void setPublisher(ApplicationEventPublisher publisher) {
+        this.publisher = publisher;
+    }
 
     public Collection<Student> getAll() {
         return Collections.unmodifiableList(students);
@@ -26,6 +34,7 @@ public class StudentsList {
     public void add(String firstName, String lastName, int age) {
         int id = lastStudentId() + 1;
         students.add(new Student(id, firstName, lastName, age));
+        publisher.publishEvent(new StudentAddedEvent(id));
     }
 
     private int lastStudentId() {
@@ -40,10 +49,16 @@ public class StudentsList {
     }
 
     public void removeById(int studentId) {
-        students.removeIf(s -> s.id() == studentId);
+        if (students.removeIf(s -> s.id() == studentId)) {
+            publisher.publishEvent(new StudentRemovedEvent(studentId));
+        }
     }
 
     public void clear() {
+        List<Integer> ids = students.stream().map(Student::id).toList();
+
         students.clear();
+
+        ids.forEach(id -> publisher.publishEvent(new StudentRemovedEvent(id)));
     }
 }
