@@ -5,6 +5,11 @@ mvn clean package
 ```
 will compile the app, run the unit tests and produce an uber jar in the target folder.
 
+```bash
+docker build -t students .
+```
+will build a docker image with the jar file from the previous command.
+
 ## Running from the uber-jar
 
 ```bash
@@ -14,6 +19,18 @@ will run the app with empty list of students.
 
 ```bash
 java -Dapp.students.generate -jar target/students-cli-app-0.0.1-SNAPSHOT.jar
+```
+will run it with some random students in the system.
+
+## Running as a docker container
+
+```bash
+docker run -it students
+```
+will run the app with empty list of students.
+
+```bash
+docker run -it -e GENERATE=true students
 ```
 will run it with some random students in the system.
 
