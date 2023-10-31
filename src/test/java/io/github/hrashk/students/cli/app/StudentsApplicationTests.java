@@ -11,6 +11,7 @@ import org.springframework.shell.test.ShellScreenAssert;
 import org.springframework.shell.test.ShellTestClient;
 import org.springframework.shell.test.autoconfigure.ShellTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.TestPropertySource;
 
 import java.time.Duration;
 import java.util.stream.Stream;
@@ -20,6 +21,7 @@ import static org.awaitility.Awaitility.await;
 @ShellTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @EnableCommand(StudentsCommands.class)
+@TestPropertySource(properties = "app.students.generate=true")
 class StudentsApplicationTests {
     static final Duration TIMEOUT = Duration.ofSeconds(2);
 
@@ -41,6 +43,17 @@ class StudentsApplicationTests {
         enterCommand(session, "help");
 
         waitForStudentsAppCommands(session);
+    }
+
+    @Test
+    void show() {
+        var session = client.interactive().run();
+
+        waitForPrompt(session);
+
+        enterCommand(session, "show");
+
+        waitForText(session, "first name");
     }
 
     static void waitForPrompt(ShellTestClient.InteractiveShellSession session) {
