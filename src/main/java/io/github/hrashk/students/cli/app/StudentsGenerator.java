@@ -19,8 +19,8 @@ public class StudentsGenerator {
 
     /**
      * Strangely, the Ready event is fired only after exiting the shell when running from the command line.
-     * The Started event is fired before the shell prompt is shown, so weare relying on it here.
-     * Even more surprisingly, the integration test passes with either of the events...
+     * The Started event is fired before the shell prompt is shown, so we are relying on it here.
+     * Even more surprisingly, the integration tests pass with either of the events...
      */
     @EventListener(ApplicationStartedEvent.class)
     public void generateRandomStudents() {
